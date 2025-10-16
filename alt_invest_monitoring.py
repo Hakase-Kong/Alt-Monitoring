@@ -1,33 +1,3 @@
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-# === Alternative Investment Monitoring (News → Telegram) ===
-# - Keeps the same infra as credit monitoring: Naver News API + NewsAPI + (optional) OpenAI LLM filter
-# - Reads keywords, source allowlist/denylist, and options from config.json
-# - Dedup by (normalized title hash, canonical URL, domain + published date proximity), with fuzzy fallback
-#
-# Env Vars:
-#   NAVER_CLIENT_ID, NAVER_CLIENT_SECRET  (optional but recommended)
-#   NEWSAPI_KEY                            (optional but recommended)
-#   OPENAI_API_KEY                         (optional; enable_llm=True to use)
-#   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID   (required to send)
-#
-# Files:
-#   config.json         -> includes section: "ALT_INVEST"
-#   sent_cache_alt.json -> stores sent URLs/ids to prevent duplicates
-#
-# Run examples:
-#   python alt_invest_monitoring.py --preview            # collect & print only
-#   python alt_invest_monitoring.py --send               # collect & send to Telegram
-#   python alt_invest_monitoring.py --lookback 24 --send # override lookback hours
-#
-# Notes:
-# - This is standalone; it does not import the credit script. Infra logic is similar and config-compatible.
-# - If your existing config.json already has shared settings (allowed_domains, exclude_keywords, etc.),
-#   those will be used if "ALT_INVEST" fields are missing.
-# ==================================================================================
-
 import os
 import re
 import json
@@ -136,7 +106,7 @@ class AltConfig:
     include_keywords: List[str] = None  # global must include (optional)
     exclude_keywords: List[str] = None  # global exclude
     keywords: Dict[str, List[str]] = None  # {"데이터센터": ["데이터센터", "센터장", ...], ...}
-    llm: LLMConfig = LLMConfig()
+    llm: LLMConfig = field(default_factory=LLMConfig)
     show_domain_in_telegram: bool = False
     send_top_n: int = 0  # if >0, send only top N across all keywords
 
