@@ -37,6 +37,9 @@ ALL_COMMON_FILTER_KEYWORDS = []
 for keywords in common_filter_categories.values():
     ALL_COMMON_FILTER_KEYWORDS.extend(keywords)
 
+def make_key(*parts):
+    return "_".join(re.sub(r"\W+", "", str(p)) for p in parts).lower()
+
 def extract_file_url(js_href: str) -> str:
     if not js_href or not js_href.startswith("javascript:fn_file"):
         return ""
@@ -1259,7 +1262,7 @@ def render_articles_with_single_summary_and_telegram(
                         select_all = st.checkbox(
                             f"전체 기사 선택/해제 ({company})",
                             value=prev_value,
-                            key=f"{company}_select_all"
+                            key=make_key("selectall", category_name, company)
                         )
                         if select_all != prev_value:
                             for k in all_article_keys:
