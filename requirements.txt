@@ -1,15 +1,9 @@
-# Core
-python-dotenv>=1.0.0
-requests>=2.31.0
-
-# OpenAI LLM 필터 (선택)
-openai>=1.40.0
-
-# JSON/YAML 파싱, 데이터 구조
-pytz>=2024.1
-
-# Streamlit 기반으로 운영하거나 UI 통합 시 (선택)
-streamlit>=1.37.0
-
-# 로깅 및 유사도 계산 등 표준 라이브러리 기반
-# difflib, hashlib, logging, dataclasses 등은 내장 라이브러리이므로 별도 설치 불필요
+streamlit
+openai
+requests
+pandas
+newspaper3k
+telepot
+xlsxwriter
+beautifulsoup4
+lxml_html_clean
