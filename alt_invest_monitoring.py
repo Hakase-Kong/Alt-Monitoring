@@ -1276,10 +1276,11 @@ def render_articles_with_single_summary_and_telegram(
                             cache_key = f"summary_{key}"
                             cols = st.columns([0.04, 0.96])
                             with cols[0]:
+                                checkbox_key = make_key("news", category_name, company, idx, uid)
                                 checked = st.checkbox(
                                     "",
                                     value=st.session_state.article_checked.get(key, False),
-                                    key=f"news_{key}",
+                                    key=checkbox_key,
                                 )
                             with cols[1]:
                                 sentiment = ""
