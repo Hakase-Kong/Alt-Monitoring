@@ -483,7 +483,7 @@ with st.expander("🏭 산업별 필터 옵션 (대분류별 소분류 필터링
             f"{major} 소분류 키워드",
             options,
             default=default_selected,
-            key=f"subfilter_{major}"
+            key=f"subfilter_{major}_{'_'.join(selected_categories)}"
         )
         updated_map[major] = selected_sub
 
