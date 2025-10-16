@@ -8,7 +8,7 @@ import hashlib
 import logging
 import argparse
 import datetime as dt
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from typing import List, Dict, Optional, Tuple, Any
 from urllib.parse import urlparse, quote_plus
 
