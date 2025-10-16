@@ -1,0 +1,100 @@
+{
+  "DEFAULTS": {
+    "allow_domains": [
+      "thebell.co.kr",
+      "www.thebell.co.kr",
+      "n.news.naver.com",
+      "m.news.naver.com",
+      "news.nate.com",
+      "biz.chosun.com",
+      "www.hankyung.com",
+      "www.mk.co.kr",
+      "www.sedaily.com",
+      "www.fnnews.com",
+      "www.edaily.co.kr",
+      "www.etoday.co.kr",
+      "www.etnews.com",
+      "www.hankookilbo.com"
+    ],
+    "deny_domains": [
+      "entertain.",
+      "sports.",
+      "m.entertain",
+      "m.sports"
+    ],
+    "include_keywords": [],
+    "exclude_keywords": [
+      "아이돌",
+      "연예",
+      "야구",
+      "축구"
+    ]
+  },
+  "ALT_INVEST": {
+    "lookback_hours": 24,
+    "max_per_keyword": 10,
+    "allow_domains": [],
+    "deny_domains": [],
+    "include_keywords": [],
+    "exclude_keywords": [
+      "팬미팅",
+      "화보",
+      "리뷰"
+    ],
+    "keywords": {
+      "부동산": [
+        "부동산",
+        "오피스",
+        "물류센터",
+        "리츠",
+        "데이터센터",
+        "프롭테크"
+      ],
+      "인프라": [
+        "인프라",
+        "사회간접자본",
+        "민자사업",
+        "BTO",
+        "BTL",
+        "SOC"
+      ],
+      "에너지": [
+        "태양광",
+        "풍력",
+        "ESS",
+        "REC",
+        "RE100",
+        "PPA"
+      ],
+      "운송자산": [
+        "항공기 리스",
+        "선박금융",
+        "컨테이너선",
+        "벌크선"
+      ],
+      "인수금융": [
+        "인수금융",
+        "레버리지드론",
+        "LBO",
+        "프로젝트파이낸스"
+      ],
+      "대체펀드": [
+        "PEF",
+        "사모펀드",
+        "벤처펀드",
+        "세컨더리 펀드",
+        "컨티뉴에이션 펀드"
+      ]
+    },
+    "llm": {
+      "enable": true,
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "top_p": 1.0,
+      "threshold": 0.68,
+      "system_prompt": "너는 보험사 자산운용 대체투자 심사 담당자다. 기사 제목/요약/본문을 바탕으로 대체투자 관점에서 실무적 중요도(0~1)를 평가하고, 핵심 키워드 3~6개를 태그로 제시해라. JSON으로만 답해라: {\"score\": 0.00, \"reason\": \"...\", \"tags\": [\"...\",\"...\"]}"
+    },
+    "show_domain_in_telegram": false,
+    "send_top_n": 0
+  }
+}
