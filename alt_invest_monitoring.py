@@ -427,8 +427,8 @@ col_title, col_option1, col_option2 = st.columns([0.5, 0.2, 0.3])
 with col_title:
     st.markdown(
         "<h1 style='color:#1a1a1a; margin-bottom:0.5rem;'>"
-        "<a href='https://credit-issue-monitoring-news-sending.onrender.com/' target='_blank' style='text-decoration:none; color:#1a1a1a;'>"
-        "📊 Credit Issue Monitoring</a></h1>",
+        "<a href='https://alt-inv-issue-monitoring-news-sending.onrender.com/' target='_blank' style='text-decoration:none; color:#1a1a1a;'>"
+        "📊 Alt-Inv. Issue Monitoring</a></h1>",
         unsafe_allow_html=True
     )
 with col_option1:
