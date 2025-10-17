@@ -329,28 +329,42 @@ def article_passes_all_filters(article):
         return False
     return True
 
+
 if st.session_state["search_results"]:
     st.markdown("### 🔎 검색 결과")
     for bucket, articles in st.session_state["search_results"].items():
-        st.markdown(f"#### • {bucket}")
-        cnt = 0
-        for a in articles:
-            if not article_passes_all_filters(a): 
-                continue
-            cnt += 1
-            with st.container():
-                st.markdown(f"**<span class='news-title'>{a['title']}</span>**", unsafe_allow_html=True)
-                st.caption(f"{a.get('date')} · {a.get('source','')} · 키워드: {a.get('키워드') or a.get('검색어')}")
-                st.write(a.get("description",""))
-                if a.get("link"): st.markdown(f"[원문보기]({a.get('link')})")
-                if st.session_state["enable_summary"]:
-                    with st.spinner("요약 중..."):
-                        one_line, kw, senti, implication, short_imp, _ = summarize_article(a.get("link"), a.get("title"), a.get("description"), a.get("키워드") or a.get("검색어"))
-                    st.markdown(f"- **한 줄 요약**: {one_line}")
-                    st.markdown(f"- **한 줄 시사점**: {short_imp}")
-                    st.markdown(f"- **심층 시사점**: {implication}")
-                    st.markdown(f"- **감성**: {senti}")
-        if cnt == 0:
-            st.info("표시할 기사가 없습니다. (필터에 모두 걸러짐)")
+        # 버킷 단위 결과 Expander
+        with st.expander(f"📰 {bucket} — 기사 목록", expanded=True):
+            cnt = 0
+            for a in articles:
+                if not article_passes_all_filters(a):
+                    continue
+                cnt += 1
+                with st.container():
+                    # 제목/메타
+                    st.markdown(f"**<span class='news-title'>{a['title']}</span>**", unsafe_allow_html=True)
+                    st.caption(f"{a.get('date')} · {a.get('source','')} · 키워드: {a.get('키워드') or a.get('검색어')}")
+                    # 본문 요약 전 간단 설명
+                    if a.get("description"):
+                        st.write(a.get("description"))
+                    if a.get("link"):
+                        st.markdown(f"[원문보기]({a.get('link')})")
+
+                    # 기사별 요약/시사점 Expander (기존 양식 유지)
+                    with st.expander("📝 요약/시사점 보기", expanded=False):
+                        if st.session_state["enable_summary"]:
+                            with st.spinner("요약 중..."):
+                                one_line, kw, senti, implication, short_imp, _ = summarize_article(
+                                    a.get("link"), a.get("title"), a.get("description"), a.get("키워드") or a.get("검색어")
+                                )
+                            st.markdown(f"- **한 줄 요약**: {one_line}")
+                            st.markdown(f"- **한 줄 시사점**: {short_imp}")
+                            st.markdown(f"- **심층 시사점**: {implication}")
+                            st.markdown(f"- **감성**: {senti}")
+                        else:
+                            st.info("요약 기능이 꺼져 있습니다. 상단에서 '요약 기능'을 켜주세요.")
+            if cnt == 0:
+                st.info("표시할 기사가 없습니다. (필터에 모두 걸러짐)")
 else:
     st.info("뉴스 검색 결과가 없습니다. 먼저 검색을 실행해 주세요.")
+
