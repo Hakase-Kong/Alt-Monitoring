@@ -427,8 +427,8 @@ col_title, col_option1, col_option2 = st.columns([0.5, 0.2, 0.3])
 with col_title:
     st.markdown(
         "<h1 style='color:#1a1a1a; margin-bottom:0.5rem;'>"
-        "<a href='https://alt-invest-monitoring.onrender.com/' target='_blank' style='text-decoration:none; color:#1a1a1a;'>"
-        "💼 Alternative Investment Monitoring</a></h1>",
+        "<a href='https://credit-issue-monitoring-news-sending.onrender.com/' target='_blank' style='text-decoration:none; color:#1a1a1a;'>"
+        "📊 Credit Issue Monitoring</a></h1>",
         unsafe_allow_html=True
     )
 with col_option1:
@@ -442,7 +442,7 @@ with col_kw_input:
 with col_kw_btn:
     search_clicked = st.button("검색", key="search_btn", help="키워드로 검색", use_container_width=True)
 
-st.markdown("**⭐ 섹터 선택**")
+st.markdown("**⭐ 산업군 선택**")
 col_cat_input, col_cat_btn = st.columns([0.8, 0.2])
 with col_cat_input:
     selected_categories = st.multiselect(
@@ -1252,6 +1252,16 @@ def render_articles_with_single_summary_and_telegram(
             with st.expander(f"📂 {category_name}", expanded=True):
                 for company in companies_with_results:
                     articles = results[company]
+                    # --- 링크 기준 중복 제거 (렌더링 전) ---
+                    _seen_links = set()
+                    _dedup = []
+                    for _a in articles:
+                        _link = _a.get("link", "")
+                        if _link and _link not in _seen_links:
+                            _seen_links.add(_link)
+                            _dedup.append(_a)
+                    articles = _dedup
+
                     with st.expander(f"[{company}] ({len(articles)}건)", expanded=False):
                         all_article_keys = []
                         for idx, article in enumerate(articles):
@@ -1276,11 +1286,10 @@ def render_articles_with_single_summary_and_telegram(
                             cache_key = f"summary_{key}"
                             cols = st.columns([0.04, 0.96])
                             with cols[0]:
-                                checkbox_key = make_key("news", category_name, company, idx, uid)
                                 checked = st.checkbox(
                                     "",
                                     value=st.session_state.article_checked.get(key, False),
-                                    key=checkbox_key,
+                                    key=make_key("news", category_name, company, idx, uid),
                                 )
                             with cols[1]:
                                 sentiment = ""
